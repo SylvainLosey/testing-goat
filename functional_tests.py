@@ -35,22 +35,29 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element_by_id("id_list_table")
         rows = table.find_elements_by_tag_name("tr")
-        self.assertTrue(
-            any(row.text == "1. Do the laundry" for row in rows),
-            "New to-do item did not appear in table",
-        )
+        self.assertIn("1: Do the laundry", [row.text for row in rows])
 
-        # There is still a text box inviting him to enter another todo, he enters "Lolz"
+        # There is still a text box inviting her to add another item. He
+        # enters "Lolz"
+        inputbox = self.browser.find_element_by_id("id_new_item")
+        inputbox.send_keys("Lolz")
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
+
+        # The page updates again, and now shows both items on her list
+        table = self.browser.find_element_by_id("id_list_table")
+        rows = table.find_elements_by_tag_name("tr")
+        self.assertIn("1: Do the laundry", [row.text for row in rows])
+        self.assertIn("2: Lolz", [row.text for row in rows])
+
+        # Edith wonders whether the site will remember her list. Then she sees
+        # that the site has generated a unique URL for her -- there is some
+        # explanatory text to that effect.
         self.fail("Finish the test!")
 
-        # The page updates again, and now shows both item on the list
+    # He visits that URL, the todo list is still there
 
-        # Jack wonder if the site will remember his list, then he sees the site
-        # generated a unique link for him
-
-        # He visits that URL, the todo list is still there
-
-        # Satisfied, he goes back to sleep
+    # Satisfied, he goes back to sleep
 
 
 if __name__ == "__main__":
