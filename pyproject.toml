@@ -10,6 +10,8 @@ selenium = "^3.141.0"
 Django = "^3.1.5"
 
 [tool.poetry.dev-dependencies]
+black = {version = "^20.8b1", allow-prereleases = true}
+flake8 = "^3.8.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
